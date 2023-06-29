@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Summerpractice</string>
+    <string name="click_to_get_the_result">Click to get the result</string>
+    <string name="fill_in_the_data_to_get_your_coolness_percentage">Get your coolness percentage</string>
+    <string name="name">Name</string>
+    <string name="age">Age</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
+</resources>
