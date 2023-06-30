@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.WindowInsets.Side.all
 import android.widget.Button
 import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
@@ -18,19 +20,69 @@ class MainActivity : AppCompatActivity() {
         val arg2:EditText = findViewById<EditText>(R.id.editTextNumber)
         val arg3:EditText = findViewById<EditText>(R.id.editTextNumber2)
         val arg4:EditText = findViewById<EditText>(R.id.editTextNumber3)
+        val arg5:RadioGroup = findViewById(R.id.radioGroup)
         val rezult:TextView =findViewById(R.id.textView3)
+        var gender:Boolean = false
         but.setOnClickListener {
             Log.e("Test", "Click")
             if(correct(arg1, arg2, arg3,arg4)){
-                rezult.text =
-                    coolnessPercentage(arg1.text.toString(), arg2.text.toString().toDouble(), arg3.text.toString().toInt(),arg4.text.toString().toInt()).toString() + "%"
+                arg5.setOnCheckedChangeListener { group, checkedId ->
+                    val selectedRadioButton = findViewById<RadioButton>(checkedId)
+                    selectedRadioButton?.let {
+                        if(correctGender(it)) {
+                            if (it.text.toString().equals("Female")) {
+                                gender = true
+                            }
+                        }else{
+                            rezult.text = "Mistake"
+                        }
+                    }
+                }
+                if(gender) {
+                    if(arg1.text.toString() == "yourDeveloper"){
+                        rezult.text = "you are the best woman in the world"
+                    }else {
+                        rezult.text = "you are very cool baby "+
+                        (coolnessPercentage(
+                            arg1.text.toString(),
+                            arg2.text.toString().toDouble(),
+                            arg3.text.toString().toInt(),
+                            arg4.text.toString().toInt()
+                        ) + 1000000).toString() + "%"
+                    }
+                }else{
+                    if(arg1.text.toString().equals( "Timur")){
+                        rezult.text = "MURMURMUR"
+                    }else{
+                        if(arg4.text.toString().toInt() >= 30){
+                            if(arg2.text.toString().toDouble() >= 105){
+                                rezult.text = "you are MASIK, thanks for your for logging into tha app(1000000000%)"
+                            }else{
+                                rezult.text = "oh, you look like Serkan Bolat(1000%)"
+                            }
+                        }else{
+                            rezult.text = "TYBIK, close the app (" + (coolnessPercentage(
+                                arg1.text.toString(),
+                                arg2.text.toString().toDouble(),
+                                arg3.text.toString().toInt(),
+                                arg4.text.toString().toInt()
+                            )- 1000000).toString() + "%)"
+                        }
+                    }
+                }
             }else{
                 rezult.text = "Mistakes"
             }
         }
     }
     fun correct(arg1:EditText, arg2: EditText, arg3:EditText, arg4: EditText):Boolean{
-        if(correctArg1(arg1) && correctArg2(arg2) && correctArg3(arg3) && correctArg4(arg4)){
+        if(correctArg1(arg1) && correctArg2(arg2) && correctArg3(arg3) && correctArg4(arg4) ){
+            return true
+        }
+        return false
+    }
+    fun correctGender(arg1:RadioButton?):Boolean{
+        if(arg1 != null && arg1 is RadioButton && arg1.text.toString() != null){
             return true
         }
         return false
